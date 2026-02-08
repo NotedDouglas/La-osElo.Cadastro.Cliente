@@ -63,6 +63,36 @@ namespace LaçosElô.Cadastro.Cliente.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap avatar_icone {
+            get {
+                object obj = ResourceManager.GetObject("avatar-icone", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap background_gradient_lights {
+            get {
+                object obj = ResourceManager.GetObject("background-gradient-lights", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap fundo_Azul {
+            get {
+                object obj = ResourceManager.GetObject("fundo Azul", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Gradiente {
             get {
                 object obj = ResourceManager.GetObject("Gradiente", resourceCulture);
@@ -76,6 +106,16 @@ namespace LaçosElô.Cadastro.Cliente.Properties {
         internal static System.Drawing.Bitmap Gradiente02 {
             get {
                 object obj = ResourceManager.GetObject("Gradiente02", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Gradiente1 {
+            get {
+                object obj = ResourceManager.GetObject("Gradiente1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
