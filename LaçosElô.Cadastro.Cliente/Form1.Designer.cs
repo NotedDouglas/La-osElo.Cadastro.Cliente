@@ -339,6 +339,7 @@
             this.TxtDoc.Name = "TxtDoc";
             this.TxtDoc.Size = new System.Drawing.Size(142, 29);
             this.TxtDoc.TabIndex = 2;
+            this.TxtDoc.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // TxtCep
             // 

@@ -31,6 +31,11 @@ namespace LaçosElô.Cadastro.Cliente {
         }
 
         private void button3_Click(object sender, EventArgs e) {
+
+            if (Validacoes() == true) {
+                return;
+            }
+
             SalvarClinteMySql();
         }
 
@@ -88,7 +93,7 @@ namespace LaçosElô.Cadastro.Cliente {
         }
 
         private void SalvarClinteMySql() {
-            using (MySqlConnection conexao = new MySqlConnection("server=localhost;Port=3306;database=dados_ clientes;user=root;Password=")) {
+            using (MySqlConnection conexao = new MySqlConnection("server=localhost;Port=3306;database=cliente;user=root;Password=")) {
 
                 conexao.Open();
 
@@ -102,6 +107,12 @@ namespace LaçosElô.Cadastro.Cliente {
                     if (OpMasculino.Checked) genero = "Masculino";
                     else if (OpFeminino.Checked) genero = "Feminino";
                     else if (OpOutros.Checked) genero = "Outro";
+
+                    if(Cksituacao.Checked == true) {
+                        Cksituacao.Text = "Ativo";
+                    } else {
+                        Cksituacao.Text = "Inativo";
+                    }
 
                     comando.Parameters.AddWithValue("@nome", TxtNome.Text);
                     comando.Parameters.AddWithValue("@doc", TxtDoc.Text);
@@ -139,6 +150,28 @@ namespace LaçosElô.Cadastro.Cliente {
 
         }
 
+        private bool Validacoes() {
+
+            // Implementar validações aqui
+            //validar campo nome
+            if (TxtNome.Text == "") {
+                MessageBox.Show("O campo Nome é obrigatório.");
+                TxtNome.Focus();
+                return true;
+            }
+
+            //validar CPF ou CNPJ
+            if (OpCpf.Checked == false || OpCnpj.Checked == false) {
+                MessageBox.Show("O campo Documento é obrigatório.\r CPF ou CNPJ");
+                return true;
+            }
+
+            //validar documento
+            if (TxtDoc.Text == "") {
+            }
+
+            return false;
+        } 
         private void TxtNascimento_MaskInputRejected(object sender, MaskInputRejectedEventArgs e) {
 
         }
