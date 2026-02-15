@@ -68,7 +68,6 @@
             this.btFechar = new System.Windows.Forms.Button();
             this.btNovo = new System.Windows.Forms.Button();
             this.btSalvar = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgCliente)).BeginInit();
@@ -656,16 +655,6 @@
             this.btSalvar.UseVisualStyleBackColor = false;
             this.btSalvar.Click += new System.EventHandler(this.button3_Click);
             // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(485, 648);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(105, 31);
-            this.button6.TabIndex = 17;
-            this.button6.Text = "button6";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
-            // 
             // ClientesLacosElo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 22F);
@@ -674,7 +663,6 @@
             this.BackgroundImage = global::LaçosElô.Cadastro.Cliente.Properties.Resources.fundo_Azul;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(810, 703);
-            this.Controls.Add(this.button6);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.btSalvar);
             this.Controls.Add(this.btNovo);
@@ -784,7 +772,6 @@
         private System.Windows.Forms.Button btFechar;
         private System.Windows.Forms.Button btNovo;
         private System.Windows.Forms.Button btSalvar;
-        private System.Windows.Forms.Button button6;
     }
 }
 

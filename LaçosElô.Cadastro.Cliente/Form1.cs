@@ -46,52 +46,6 @@ namespace LaçosElô.Cadastro.Cliente {
                 SendKeys.Send("{TAB}");
             }
         }
-
-        private void button6_Click(object sender, EventArgs e) {
-
-            using (MySqlConnection conexao = new MySqlConnection("server=localhost;Port=3306;database=dados_ clientes;user=root;Password=")) {
-
-                conexao.Open();
-
-                using (MySqlCommand comando = conexao.CreateCommand()) {
-                    comando.CommandText = "INSERT INTO clientes (nome, documento, genero, rg, estado_civil, data_nascimento, cep, endereco," +
-                        "numero, bairro, cidade, celular, email, obs, situacao) " +
-                        "VALUES " +
-                        "(@nome, @doc, @genero, @rg, @es_civil, @data_nasc, @cep, @endereco, @numero, @bairro, @cidade, @celular, @email, @obs, @situacao)";
-
-                    comando.Parameters.AddWithValue("@nome", TxtNome.Text);
-                    comando.Parameters.AddWithValue("@doc", TxtDoc.Text);
-
-                    comando.Parameters.AddWithValue("@genero", "genero");
-
-                    comando.Parameters.AddWithValue("@rg", TxtRg.Text);
-                    comando.Parameters.AddWithValue("@es_civil", comboEstadoCivil.Text);
-                    comando.Parameters.AddWithValue("@data_nasc", TxtNascimento.Text);
-                    comando.Parameters.AddWithValue("@cep", TxtCep.Text);
-                    comando.Parameters.AddWithValue("@endereco", ComboEndereco.Text);
-                    comando.Parameters.AddWithValue("@numero", TxtNumero.Text);
-                    comando.Parameters.AddWithValue("@bairro", comboBairro.Text);
-                    comando.Parameters.AddWithValue("@cidade", comboCidade.Text);
-                    comando.Parameters.AddWithValue("@celular", TxtCelular.Text);
-                    comando.Parameters.AddWithValue("@email", TxtEmail.Text);
-                    comando.Parameters.AddWithValue("@obs", TxtObs.Text);
-                    comando.Parameters.AddWithValue("@situacao", Cksituacao.Text);
-
-                    try {
-                        int resultado = comando.ExecuteNonQuery();
-                        if (resultado > 0) {
-                            MessageBox.Show("Cliente cadastrado com sucesso!");
-                        } else {
-                            MessageBox.Show("Falha ao cadastrar cliente.");
-                        }
-                    } catch (Exception ex) {
-                        MessageBox.Show("Erro ao executar comando: " + ex.Message);
-                    }
-                }
-            }
-
-        }
-
         private void SalvarClinteMySql() {
             using (MySqlConnection conexao = new MySqlConnection("server=localhost;Port=3306;database=cliente;user=root;Password=")) {
 
@@ -122,7 +76,10 @@ namespace LaçosElô.Cadastro.Cliente {
                     comando.Parameters.AddWithValue("@rg", TxtRg.Text);
                     comando.Parameters.AddWithValue("@es_civil", comboEstadoCivil.Text);
 
-                    comando.Parameters.Add("@nasc", MySqlDbType.Date).Value =DateTime.ParseExact(TxtNascimento.Text, "dd/MM/yyyy",System.Globalization.CultureInfo.InvariantCulture);
+                    if (TxtNascimento.Text == "  /  /") 
+                        comando.Parameters.AddWithValue("@nasc", DBNull.Value);
+                    else 
+                    comando.Parameters.AddWithValue("@nasc", Convert.ToDateTime(TxtNascimento.Text));
 
 
                     comando.Parameters.AddWithValue("@cep", TxtCep.Text);
@@ -135,16 +92,17 @@ namespace LaçosElô.Cadastro.Cliente {
                     comando.Parameters.AddWithValue("@obs", TxtObs.Text);
                     comando.Parameters.AddWithValue("@situacao", Cksituacao.Text);
 
-                    try {
-                        int resultado = comando.ExecuteNonQuery();
-                        if (resultado > 0) {
-                            MessageBox.Show("Cliente cadastrado com sucesso!");
-                        } else {
-                            MessageBox.Show("Falha ao cadastrar cliente.");
-                        }
-                    } catch (Exception ex) {
-                        MessageBox.Show("Erro ao executar comando: " + ex.Message);
+                    int resultado = comando.ExecuteNonQuery();
+
+                    if (resultado > 0) {
+                        long idGerado = comando.LastInsertedId;
+                        TxtId.Text = idGerado.ToString();
+
+                        MessageBox.Show("Cliente cadastrado com sucesso!");
+                    } else {
+                        MessageBox.Show("Falha ao cadastrar cliente.");
                     }
+
                 }
             }
 
@@ -154,23 +112,39 @@ namespace LaçosElô.Cadastro.Cliente {
 
             // Implementar validações aqui
             //validar campo nome
-            if (TxtNome.Text == "") {
+            if (string.IsNullOrWhiteSpace(TxtNome.Text)) {
                 MessageBox.Show("O campo Nome é obrigatório.");
                 TxtNome.Focus();
                 return true;
             }
 
             //validar CPF ou CNPJ
-            if (OpCpf.Checked == false || OpCnpj.Checked == false) {
-                MessageBox.Show("O campo Documento é obrigatório.\r CPF ou CNPJ");
+            if (!OpCpf.Checked && !OpCnpj.Checked) {
+                MessageBox.Show("Marque o tipo de documentação.\nCPF ou CNPJ");
                 return true;
             }
 
             //validar documento
             if (TxtDoc.Text == "") {
+                MessageBox.Show("O campo Documento é obrigatório.");
+                TxtDoc.Focus();
+                return true;
+            }
+            //validar gênero
+            if (!OpMasculino.Checked && !OpFeminino.Checked && !OpOutros.Checked) {
+                MessageBox.Show("Marque o gênero do cliente.");
+                return true;
             }
 
-            return false;
+            //validar data de nascimento
+            if (TxtNascimento.Text != "  /  /") 
+                try {
+                Convert.ToDateTime(TxtNascimento.Text);
+            } catch (Exception) {
+                MessageBox.Show("Data de Nascimento Não Valida.");
+                return true;
+            }
+                return false;
         } 
         private void TxtNascimento_MaskInputRejected(object sender, MaskInputRejectedEventArgs e) {
 
