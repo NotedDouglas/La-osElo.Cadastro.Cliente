@@ -614,7 +614,7 @@
             this.btFechar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btFechar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btFechar.UseVisualStyleBackColor = false;
-            this.btFechar.Click += new System.EventHandler(this.button3_Click);
+            this.btFechar.Click += new System.EventHandler(this.BtFechar_Click);
             // 
             // btNovo
             // 
@@ -634,7 +634,7 @@
             this.btNovo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btNovo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btNovo.UseVisualStyleBackColor = false;
-            this.btNovo.Click += new System.EventHandler(this.button3_Click);
+            this.btNovo.Click += new System.EventHandler(this.BtNovo_Click);
             // 
             // btSalvar
             // 

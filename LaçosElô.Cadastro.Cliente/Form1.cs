@@ -31,11 +31,9 @@ namespace LaçosElô.Cadastro.Cliente {
         }
 
         private void button3_Click(object sender, EventArgs e) {
-
-            if (Validacoes() == true) {
+            if (Validacoes()) {
                 return;
             }
-
             SalvarClinteMySql();
         }
 
@@ -148,6 +146,51 @@ namespace LaçosElô.Cadastro.Cliente {
         } 
         private void TxtNascimento_MaskInputRejected(object sender, MaskInputRejectedEventArgs e) {
 
+        }
+        private void LimparCampos() {
+            TxtId.Clear();
+            TxtNome.Clear();
+            TxtDoc.Clear();
+            TxtRg.Clear();
+            TxtNascimento.Clear();
+            TxtCep.Clear();
+            TxtNumero.Clear();
+            TxtCelular.Clear();
+            TxtEmail.Clear();
+            TxtObs.Clear();
+
+            comboEstadoCivil.SelectedIndex = -1;
+            comboBairro.SelectedIndex = -1;
+            comboCidade.SelectedIndex = -1;
+            ComboEndereco.SelectedIndex = -1;
+
+            OpCpf.Checked = false;
+            OpCnpj.Checked = false;
+
+            OpMasculino.Checked = false;
+            OpFeminino.Checked = false;
+            OpOutros.Checked = false;
+
+            Cksituacao.Checked = true; // deixa como padrão ativo
+
+            TxtNome.Focus();
+        }
+
+        private void BtNovo_Click(object sender, EventArgs e) {
+            var resposta = MessageBox.Show(
+                "Limpar campos para novo cadastro?",
+                "Laços Elô",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (resposta == DialogResult.Yes) {
+                LimparCampos();
+            
+            }
+        }
+
+        private void BtFechar_Click(object sender, EventArgs e) {
+            Close();
         }
     }
 }
