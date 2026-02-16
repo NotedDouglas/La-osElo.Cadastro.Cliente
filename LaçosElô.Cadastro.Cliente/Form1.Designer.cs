@@ -245,6 +245,7 @@
             this.TxtNome.Name = "TxtNome";
             this.TxtNome.Size = new System.Drawing.Size(389, 29);
             this.TxtNome.TabIndex = 0;
+            this.TxtNome.TextChanged += new System.EventHandler(this.TxtNome_TextChanged);
             // 
             // TxtEmail
             // 
@@ -290,6 +291,7 @@
             this.OpMasculino.TabStop = true;
             this.OpMasculino.Text = "Masculino";
             this.OpMasculino.UseVisualStyleBackColor = false;
+            this.OpMasculino.CheckedChanged += new System.EventHandler(this.OpMasculino_CheckedChanged);
             // 
             // OpFeminino
             // 
@@ -301,7 +303,7 @@
             this.OpFeminino.TabIndex = 2;
             this.OpFeminino.Text = "Feminino";
             this.OpFeminino.UseVisualStyleBackColor = false;
-            this.OpFeminino.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
+            this.OpFeminino.CheckedChanged += new System.EventHandler(this.OpFeminino_CheckedChanged);
             // 
             // OpOutros
             // 
@@ -313,6 +315,7 @@
             this.OpOutros.TabIndex = 2;
             this.OpOutros.Text = "Outros";
             this.OpOutros.UseVisualStyleBackColor = false;
+            this.OpOutros.CheckedChanged += new System.EventHandler(this.OpOutros_CheckedChanged);
             // 
             // Cksituacao
             // 
@@ -334,11 +337,11 @@
             this.TxtDoc.BeepOnError = true;
             this.TxtDoc.ForeColor = System.Drawing.Color.SteelBlue;
             this.TxtDoc.Location = new System.Drawing.Point(221, 158);
-            this.TxtDoc.Mask = "000,000,000-00";
             this.TxtDoc.Name = "TxtDoc";
             this.TxtDoc.Size = new System.Drawing.Size(142, 29);
             this.TxtDoc.TabIndex = 2;
             this.TxtDoc.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.TxtDoc.Validating += new System.ComponentModel.CancelEventHandler(this.TxtDoc_Validating);
             // 
             // TxtCep
             // 
@@ -349,6 +352,8 @@
             this.TxtCep.Name = "TxtCep";
             this.TxtCep.Size = new System.Drawing.Size(167, 29);
             this.TxtCep.TabIndex = 7;
+            this.TxtCep.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.TxtCep.Validating += new System.ComponentModel.CancelEventHandler(this.TxtCep_Validating);
             // 
             // TxtCelular
             // 
@@ -371,6 +376,7 @@
             this.OpCpf.TabStop = true;
             this.OpCpf.Text = "CPF";
             this.OpCpf.UseVisualStyleBackColor = false;
+            this.OpCpf.CheckedChanged += new System.EventHandler(this.OpCpf_CheckedChanged);
             // 
             // OpCnpj
             // 
@@ -383,7 +389,7 @@
             this.OpCnpj.TabIndex = 1;
             this.OpCnpj.Text = "CNPJ";
             this.OpCnpj.UseVisualStyleBackColor = false;
-            this.OpCnpj.CheckedChanged += new System.EventHandler(this.radioButton5_CheckedChanged);
+            this.OpCnpj.CheckedChanged += new System.EventHandler(this.OpCNPJ_CheckedChanged);
             // 
             // panel1
             // 
@@ -462,6 +468,7 @@
             this.comboEstado.Name = "comboEstado";
             this.comboEstado.Size = new System.Drawing.Size(190, 30);
             this.comboEstado.TabIndex = 12;
+            this.comboEstado.Validating += new System.ComponentModel.CancelEventHandler(this.comboEstado_Validating);
             // 
             // ComboEndereco
             // 
@@ -482,6 +489,7 @@
             this.comboEstadoCivil.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.comboEstadoCivil.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboEstadoCivil.DropDownHeight = 200;
+            this.comboEstadoCivil.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboEstadoCivil.DropDownWidth = 100;
             this.comboEstadoCivil.ForeColor = System.Drawing.Color.SteelBlue;
             this.comboEstadoCivil.FormattingEnabled = true;
@@ -496,6 +504,7 @@
             this.comboEstadoCivil.Name = "comboEstadoCivil";
             this.comboEstadoCivil.Size = new System.Drawing.Size(165, 30);
             this.comboEstadoCivil.TabIndex = 5;
+            this.comboEstadoCivil.SelectedIndexChanged += new System.EventHandler(this.comboEstadoCivil_SelectedIndexChanged);
             // 
             // comboBairro
             // 
@@ -558,6 +567,7 @@
             this.TxtNascimento.Size = new System.Drawing.Size(212, 29);
             this.TxtNascimento.TabIndex = 6;
             this.TxtNascimento.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.TxtNascimento_MaskInputRejected);
+            this.TxtNascimento.Validating += new System.ComponentModel.CancelEventHandler(this.TxtNascimento_Validating);
             // 
             // btImagemAdd
             // 

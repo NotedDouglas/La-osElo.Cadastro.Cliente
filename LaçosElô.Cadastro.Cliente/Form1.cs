@@ -18,10 +18,6 @@ namespace LaçosElô.Cadastro.Cliente {
 
         }
 
-        private void radioButton5_CheckedChanged(object sender, EventArgs e) {
-
-        }
-
         private void Genero_Enter(object sender, EventArgs e) {
 
         }
@@ -188,9 +184,108 @@ namespace LaçosElô.Cadastro.Cliente {
             
             }
         }
-
         private void BtFechar_Click(object sender, EventArgs e) {
             Close();
         }
+
+        private void OpCpf_CheckedChanged(object sender, EventArgs e) {
+            if (OpCpf.Checked) {
+                TxtDoc.Mask = "000,000,000-00";
+                TxtDoc.Focus();
+                TxtDoc.Clear();
+            }
+        }
+
+        private void OpCNPJ_CheckedChanged(object sender, EventArgs e) {
+            if (OpCnpj.Checked) {
+                TxtDoc.Mask = "00,000,000/0000-00";
+                TxtDoc.Focus();
+                TxtDoc.Clear();
+            }
+        }
+
+        private void OpMasculino_CheckedChanged(object sender, EventArgs e) {
+            TxtRg.Focus();
+        }
+
+        private void OpFeminino_CheckedChanged(object sender, EventArgs e) {
+            TxtRg.Focus();
+        }
+
+        private void OpOutros_CheckedChanged(object sender, EventArgs e) {
+            TxtRg.Focus();
+        }
+
+        private void comboEstadoCivil_SelectedIndexChanged(object sender, EventArgs e) {
+            
+        }
+
+        private void TxtNascimento_Validating(object sender, System.ComponentModel.CancelEventArgs e) {
+            e.Cancel = false; // Permite que o foco seja perdido mesmo que a validação falhe
+            if (TxtNascimento.Text != "  /  /") {
+                try {
+                    Convert.ToDateTime(TxtNascimento.Text);
+                } catch (Exception) {
+                    MessageBox.Show("Data de Nascimento Não Valida.");
+                    TxtNascimento.Focus();
+                }
+            }
+        }
+        private void comboEstado_Validating(object sender, System.ComponentModel.CancelEventArgs e) {
+            if (comboEstado.Text == "") 
+                return;
+            
+            if (comboEstado.SelectedIndex == -1) {
+                MessageBox.Show("Selecione um estado válido.");
+                e.Cancel = true;
+            }
+        }
+
+        TextInfo textInfo = new CultureInfo("pt-BR", false).TextInfo;
+        private void TxtNome_TextChanged(object sender, EventArgs e) {
+            string texto = TxtNome.Text;
+
+            texto = textInfo.ToTitleCase(texto);
+
+            texto = texto.Replace(" De ", " de ")
+                         .Replace(" Da ", " da ")
+                         .Replace(" Do ", " do ")
+                         .Replace(" E ", " e ")
+                         .Replace(" I ", " i ")
+                         .Replace(" Em ", " em ")
+                         .Replace(" Na ", " na ")
+                         .Replace(" No ", " no ");  
+        }
+
+        private void TxtCep_Validating(object sender, System.ComponentModel.CancelEventArgs e) {
+
+             if (TxtCep.Text.Length == 0) {
+                return;
+             }
+             else if (TxtCep.Text.Length < 8) { 
+                MessageBox.Show("CEP deve conter 8 dígitos.");
+                e.Cancel = true;
+             }
+        }
+
+        private void TxtDoc_Validating(object sender, System.ComponentModel.CancelEventArgs e) {
+
+            if (TxtDoc.Text.Length == 0) {
+                return;
+            }
+
+            if (OpCpf.Checked == true) {
+                if (TxtDoc.Text.Length < 11) {
+                    MessageBox.Show("CPF deve conter 11 dígitos.");
+                    e.Cancel = true;
+                }
+            } else if (OpCnpj.Checked == true) {
+                if (TxtDoc.Text.Length < 14) {
+                    MessageBox.Show("CNPJ deve conter 14 dígitos.");
+                    e.Cancel = true;
+                }
+            }
+        }
     }
+    
 }
