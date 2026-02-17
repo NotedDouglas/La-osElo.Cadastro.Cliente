@@ -483,6 +483,7 @@
             this.ComboEndereco.Name = "ComboEndereco";
             this.ComboEndereco.Size = new System.Drawing.Size(464, 30);
             this.ComboEndereco.TabIndex = 8;
+            this.ComboEndereco.TextChanged += new System.EventHandler(this.ComboEndereco_TextChanged);
             // 
             // comboEstadoCivil
             // 
@@ -545,6 +546,7 @@
             this.imgCliente.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.imgCliente.TabIndex = 8;
             this.imgCliente.TabStop = false;
+            this.imgCliente.Click += new System.EventHandler(this.imgCliente_Click);
             // 
             // label4
             // 
@@ -587,6 +589,7 @@
             this.btImagemAdd.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btImagemAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btImagemAdd.UseVisualStyleBackColor = false;
+            this.btImagemAdd.Click += new System.EventHandler(this.btImagemAdd_Click);
             // 
             // button2
             // 
@@ -605,6 +608,7 @@
             this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // btFechar
             // 

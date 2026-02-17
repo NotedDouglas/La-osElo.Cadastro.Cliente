@@ -3,6 +3,8 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Org.BouncyCastle.Crypto.Parameters;
 using System.Globalization;
+using System.Drawing;
+using System.IO;
 
 namespace LaçosElô.Cadastro.Cliente {
     public partial class ClientesLacosElo : Form {
@@ -239,10 +241,11 @@ namespace LaçosElô.Cadastro.Cliente {
                 MessageBox.Show("Selecione um estado válido.");
                 e.Cancel = true;
             }
-        }
-
-        TextInfo textInfo = new CultureInfo("pt-BR", false).TextInfo;
+        }       
         private void TxtNome_TextChanged(object sender, EventArgs e) {
+
+            TextInfo textInfo = new CultureInfo("pt-BR", false).TextInfo;
+
             string texto = TxtNome.Text;
 
             texto = textInfo.ToTitleCase(texto);
@@ -254,7 +257,10 @@ namespace LaçosElô.Cadastro.Cliente {
                          .Replace(" I ", " i ")
                          .Replace(" Em ", " em ")
                          .Replace(" Na ", " na ")
-                         .Replace(" No ", " no ");  
+                         .Replace(" No ", " no "); 
+
+            TxtNome.Text = texto;
+            TxtNome.SelectionStart = TxtNome.Text.Length; // Mantém o cursor no final do texto
         }
 
         private void TxtCep_Validating(object sender, System.ComponentModel.CancelEventArgs e) {
@@ -275,16 +281,64 @@ namespace LaçosElô.Cadastro.Cliente {
             }
 
             if (OpCpf.Checked == true) {
-                if (TxtDoc.Text.Length < 11) {
+                if (TxtDoc.Text.Replace(" ", "").Length < 11) {
                     MessageBox.Show("CPF deve conter 11 dígitos.");
                     e.Cancel = true;
                 }
             } else if (OpCnpj.Checked == true) {
-                if (TxtDoc.Text.Length < 14) {
+                if (TxtDoc.Text.Replace(" ", "").Length < 14) {
                     MessageBox.Show("CNPJ deve conter 14 dígitos.");
                     e.Cancel = true;
                 }
             }
+        }
+
+        private void ComboEndereco_TextChanged(object sender, EventArgs e) {
+            ComboEndereco.TextChanged -= ComboEndereco_TextChanged;
+
+            Funcoes.PrimeiraMaius(ComboEndereco);
+
+            ComboEndereco.TextChanged += ComboEndereco_TextChanged;
+        }
+
+        private void imgCliente_Click(object sender, EventArgs e) {
+
+        }
+
+        private void btImagemAdd_Click(object sender, EventArgs e) {
+
+            if (TxtId.Text == "") {
+                Funcoes.MsgErro("Salve os dados do cliente primeiro.");
+                return;
+            }
+
+            OpenFileDialog caixa = new OpenFileDialog();
+            caixa.Filter = "Arquivos de Imagem|*.jpg;*.jpeg;*.png;*.bmp;*gif";
+
+            if (caixa.ShowDialog() == DialogResult.OK ) {
+                imgCliente.Image = Image.FromFile(caixa.FileName);
+
+                File.Copy(caixa.FileName, 
+                    AppDomain.CurrentDomain.BaseDirectory + "Fotos/" + TxtId.Text + ".png");
+            }
+        }
+        private void button2_Click(object sender, EventArgs e) {
+
+            if (TxtId.Text == "") {
+                Funcoes.MsgAlerta("Não há fotos para ser removida");
+                return;
+            }
+
+            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "Fotos/" + TxtId.Text + ".png") == false) {
+                Funcoes.MsgAlerta("Não há foto para remover.");
+                return;
+            }
+
+            if (Funcoes.Pergunta("Deseja remover a foto do cliente?") == false)
+                return;
+
+            imgCliente.Image = Properties.Resources.avatar_icone;
+            File.Delete(AppDomain.CurrentDomain.BaseDirectory + "Fotos/" + TxtId.Text + ".png");
         }
     }
     
