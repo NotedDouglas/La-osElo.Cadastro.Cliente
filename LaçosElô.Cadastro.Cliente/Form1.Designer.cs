@@ -237,6 +237,7 @@
             this.TxtId.Size = new System.Drawing.Size(142, 29);
             this.TxtId.TabIndex = 1;
             this.TxtId.TabStop = false;
+            this.TxtId.Text = "15";
             // 
             // TxtNome
             // 

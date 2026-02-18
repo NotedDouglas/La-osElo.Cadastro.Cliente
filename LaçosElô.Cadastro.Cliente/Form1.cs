@@ -1,10 +1,12 @@
-﻿using System;
-using System.Windows.Forms;
-using MySql.Data.MySqlClient;
-using Org.BouncyCastle.Crypto.Parameters;
-using System.Globalization;
+﻿using MySql.Data.MySqlClient;
+using System;
+using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace LaçosElô.Cadastro.Cliente {
     public partial class ClientesLacosElo : Form {
@@ -14,6 +16,80 @@ namespace LaçosElô.Cadastro.Cliente {
 
         private void Form1_Load(object sender, EventArgs e) {
 
+            if (int.TryParse(TxtId.Text, out int id)) {
+                CarregarCliente(id);
+            }
+
+        }
+        private void PreencherCampos(DataRow row) {
+            TxtId.Text = row["id"].ToString();
+            TxtNome.Text = row["nome"].ToString();
+            TxtRg.Text = row["rg"].ToString();
+            comboEstadoCivil.Text = row["estado_civil"].ToString();
+            TxtNascimento.Text = row["nasc"].ToString();
+            TxtCep.Text = row["cep"].ToString();
+            ComboEndereco.Text = row["endereco"].ToString();
+            TxtNumero.Text = row["numero"].ToString();
+            comboBairro.Text = row["bairro"].ToString();
+            comboCidade.Text = row["cidade"].ToString();
+            comboEstado.Text = row["estado"].ToString();
+            TxtCelular.Text = row["celular"].ToString();
+            TxtEmail.Text = row["email"].ToString();
+            TxtObs.Text = row["obs"].ToString();
+
+            // ===== GÊNERO =====
+            switch (row["genero"]?.ToString()) {
+                case "Masculino":
+                    OpMasculino.Checked = true;
+                    break;
+
+                case "Feminino":
+                    OpFeminino.Checked = true;
+                    break;
+
+                case "Outro":
+                    OpOutros.Checked = true;
+                    break;
+            }
+
+            // ===== DOCUMENTO =====
+            string documento = row["documento"]?.ToString() ?? "";
+
+            // remove qualquer caractere que não seja número
+            string somenteNumeros = new string(documento.Where(char.IsDigit).ToArray());
+
+            if (somenteNumeros.Length == 11) {
+                OpCpf.Checked = true;
+            } else if (somenteNumeros.Length == 14) {
+                OpCnpj.Checked = true;
+            }
+
+            TxtDoc.Text = documento;
+
+            // ===== SITUAÇÃO =====
+            if (row["situacao"]?.ToString() == "Ativo") {
+                Cksituacao.Checked = true;
+            } else {
+                Cksituacao.Checked = false;
+            }
+
+            // ===== IMAGEM =====
+            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "Fotos/" + TxtId.Text + ".png"))
+                imgCliente.Image = Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + "Fotos/" + TxtId.Text + ".png");
+
+            else {
+                imgCliente.Image = Properties.Resources.avatar_icone;
+            }
+
+        }
+
+
+        private void CarregarCliente(int id) {
+            ClienteRepository repo = new ClienteRepository();
+            DataTable dt = repo.BuscarClientePorId(id);
+
+            if (dt.Rows.Count > 0)
+                PreencherCampos(dt.Rows[0]);
         }
 
         private void label1_Click(object sender, EventArgs e) {
@@ -49,9 +125,9 @@ namespace LaçosElô.Cadastro.Cliente {
 
                 using (MySqlCommand comando = conexao.CreateCommand()) {
                     comando.CommandText = "INSERT INTO clientes (nome, documento, genero, rg, estado_civil, nasc, cep, endereco," +
-                        "numero, bairro, cidade, celular, email, obs, situacao) " +
+                        "numero, bairro, cidade, estado, celular, email, obs, situacao) " +
                         "VALUES " +
-                        "(@nome, @doc, @genero, @rg, @es_civil, @nasc, @cep, @endereco, @numero, @bairro, @cidade, @celular, @email, @obs, @situacao)";
+                        "(@nome, @doc, @genero, @rg, @es_civil, @nasc, @cep, @endereco, @numero, @bairro, @cidade, @estado, @celular, @email, @obs, @situacao)";
 
                     string genero = null;
                     if (OpMasculino.Checked) genero = "Masculino";
@@ -83,6 +159,7 @@ namespace LaçosElô.Cadastro.Cliente {
                     comando.Parameters.AddWithValue("@numero", TxtNumero.Text);
                     comando.Parameters.AddWithValue("@bairro", comboBairro.Text);
                     comando.Parameters.AddWithValue("@cidade", comboCidade.Text);
+                    comando.Parameters.AddWithValue("@estado", comboEstado.Text);
                     comando.Parameters.AddWithValue("@celular", TxtCelular.Text);
                     comando.Parameters.AddWithValue("@email", TxtEmail.Text);
                     comando.Parameters.AddWithValue("@obs", TxtObs.Text);
