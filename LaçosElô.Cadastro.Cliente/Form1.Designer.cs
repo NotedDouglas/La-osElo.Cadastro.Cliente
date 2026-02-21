@@ -234,10 +234,11 @@
             this.TxtId.ForeColor = System.Drawing.Color.SteelBlue;
             this.TxtId.Location = new System.Drawing.Point(221, 72);
             this.TxtId.Name = "TxtId";
+            this.TxtId.ReadOnly = true;
             this.TxtId.Size = new System.Drawing.Size(142, 29);
             this.TxtId.TabIndex = 1;
             this.TxtId.TabStop = false;
-            this.TxtId.Text = "15";
+            this.TxtId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // TxtNome
             // 
@@ -660,9 +661,9 @@
             this.btSalvar.Font = new System.Drawing.Font("Consolas", 11F);
             this.btSalvar.ForeColor = System.Drawing.Color.White;
             this.btSalvar.Image = ((System.Drawing.Image)(resources.GetObject("btSalvar.Image")));
-            this.btSalvar.Location = new System.Drawing.Point(664, 654);
+            this.btSalvar.Location = new System.Drawing.Point(640, 654);
             this.btSalvar.Name = "btSalvar";
-            this.btSalvar.Size = new System.Drawing.Size(110, 37);
+            this.btSalvar.Size = new System.Drawing.Size(134, 37);
             this.btSalvar.TabIndex = 16;
             this.btSalvar.Text = "Salvar";
             this.btSalvar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;

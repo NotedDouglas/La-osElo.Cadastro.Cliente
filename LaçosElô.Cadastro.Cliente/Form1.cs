@@ -14,7 +14,15 @@ namespace LaçosElô.Cadastro.Cliente {
             InitializeComponent();
         }
 
+        string stringConexao = "server=localhost;Port=3306;database=cliente;user=root;Password=";
+        string caminhoFotos = AppDomain.CurrentDomain.BaseDirectory + "Fotos/";
+
         private void Form1_Load(object sender, EventArgs e) {
+
+            if (TxtId.Text == "")
+                return;
+
+            btSalvar.Text = "Atualizar";    
 
             if (int.TryParse(TxtId.Text, out int id)) {
                 CarregarCliente(id);
@@ -74,8 +82,8 @@ namespace LaçosElô.Cadastro.Cliente {
             }
 
             // ===== IMAGEM =====
-            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "Fotos/" + TxtId.Text + ".png"))
-                imgCliente.Image = Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + "Fotos/" + TxtId.Text + ".png");
+            if (File.Exists(caminhoFotos + TxtId.Text + ".png"))
+                imgCliente.Image = Image.FromFile(caminhoFotos + TxtId.Text + ".png");
 
             else {
                 imgCliente.Image = Properties.Resources.avatar_icone;
@@ -119,40 +127,62 @@ namespace LaçosElô.Cadastro.Cliente {
             }
         }
         private void SalvarClinteMySql() {
-            using (MySqlConnection conexao = new MySqlConnection("server=localhost;Port=3306;database=cliente;user=root;Password=")) {
-
+            using (MySqlConnection conexao = new MySqlConnection(stringConexao)) {
                 conexao.Open();
 
                 using (MySqlCommand comando = conexao.CreateCommand()) {
-                    comando.CommandText = "INSERT INTO clientes (nome, documento, genero, rg, estado_civil, nasc, cep, endereco," +
-                        "numero, bairro, cidade, estado, celular, email, obs, situacao) " +
-                        "VALUES " +
-                        "(@nome, @doc, @genero, @rg, @es_civil, @nasc, @cep, @endereco, @numero, @bairro, @cidade, @estado, @celular, @email, @obs, @situacao)";
+                    bool novoRegistro = string.IsNullOrWhiteSpace(TxtId.Text);
 
+                    if (novoRegistro) {
+                        comando.CommandText = @"INSERT INTO clientes 
+                (nome, documento, genero, rg, estado_civil, nasc, cep, endereco,
+                 numero, bairro, cidade, estado, celular, email, obs, situacao)
+                VALUES
+                (@nome, @doc, @genero, @rg, @es_civil, @nasc, @cep, @endereco,
+                 @numero, @bairro, @cidade, @estado, @celular, @email, @obs, @situacao)";
+                    } else {
+                        comando.CommandText = @"UPDATE clientes SET
+                    nome=@nome,
+                    documento=@doc,
+                    genero=@genero,
+                    rg=@rg,
+                    estado_civil=@es_civil,
+                    nasc=@nasc,
+                    cep=@cep,
+                    endereco=@endereco,
+                    numero=@numero,
+                    bairro=@bairro,
+                    cidade=@cidade,
+                    estado=@estado,
+                    celular=@celular,
+                    email=@email,
+                    obs=@obs,
+                    situacao=@situacao
+                    WHERE id=@id";
+
+                        comando.Parameters.AddWithValue("@id", TxtId.Text);
+                    }
+
+                    // ===== GÊNERO =====
                     string genero = null;
                     if (OpMasculino.Checked) genero = "Masculino";
                     else if (OpFeminino.Checked) genero = "Feminino";
                     else if (OpOutros.Checked) genero = "Outro";
 
-                    if(Cksituacao.Checked == true) {
-                        Cksituacao.Text = "Ativo";
-                    } else {
-                        Cksituacao.Text = "Inativo";
-                    }
+                    // ===== SITUAÇÃO =====
+                    string situacao = Cksituacao.Checked ? "Ativo" : "Inativo";
 
+                    // ===== PARÂMETROS =====
                     comando.Parameters.AddWithValue("@nome", TxtNome.Text);
                     comando.Parameters.AddWithValue("@doc", TxtDoc.Text);
-
                     comando.Parameters.AddWithValue("@genero", (object)genero ?? DBNull.Value);
-
                     comando.Parameters.AddWithValue("@rg", TxtRg.Text);
                     comando.Parameters.AddWithValue("@es_civil", comboEstadoCivil.Text);
 
-                    if (TxtNascimento.Text == "  /  /") 
+                    if (TxtNascimento.Text == "  /  /")
                         comando.Parameters.AddWithValue("@nasc", DBNull.Value);
-                    else 
-                    comando.Parameters.AddWithValue("@nasc", Convert.ToDateTime(TxtNascimento.Text));
-
+                    else
+                        comando.Parameters.AddWithValue("@nasc", Convert.ToDateTime(TxtNascimento.Text));
 
                     comando.Parameters.AddWithValue("@cep", TxtCep.Text);
                     comando.Parameters.AddWithValue("@endereco", ComboEndereco.Text);
@@ -163,24 +193,21 @@ namespace LaçosElô.Cadastro.Cliente {
                     comando.Parameters.AddWithValue("@celular", TxtCelular.Text);
                     comando.Parameters.AddWithValue("@email", TxtEmail.Text);
                     comando.Parameters.AddWithValue("@obs", TxtObs.Text);
-                    comando.Parameters.AddWithValue("@situacao", Cksituacao.Text);
+                    comando.Parameters.AddWithValue("@situacao", situacao);
 
                     int resultado = comando.ExecuteNonQuery();
 
                     if (resultado > 0) {
-                        long idGerado = comando.LastInsertedId;
-                        TxtId.Text = idGerado.ToString();
+                        if (novoRegistro)
+                            TxtId.Text = comando.LastInsertedId.ToString();
 
-                        MessageBox.Show("Cliente cadastrado com sucesso!");
+                        MessageBox.Show("Cliente salvo com sucesso!");
                     } else {
-                        MessageBox.Show("Falha ao cadastrar cliente.");
+                        MessageBox.Show("Falha ao salvar cliente.");
                     }
-
                 }
             }
-
         }
-
         private bool Validacoes() {
 
             // Implementar validações aqui
@@ -234,10 +261,19 @@ namespace LaçosElô.Cadastro.Cliente {
             TxtEmail.Clear();
             TxtObs.Clear();
 
-            comboEstadoCivil.SelectedIndex = -1;
-            comboBairro.SelectedIndex = -1;
-            comboCidade.SelectedIndex = -1;
-            ComboEndereco.SelectedIndex = -1;
+            comboEstadoCivil.SelectedItem = null;
+
+            ComboEndereco.SelectedItem = null;
+            ComboEndereco.ResetText();
+
+            comboBairro.SelectedItem = null;
+            comboBairro.ResetText();
+
+            comboCidade.SelectedItem = null;
+            comboCidade.ResetText();
+
+            comboEstado.SelectedItem = null;
+            comboEstado.ResetText();
 
             OpCpf.Checked = false;
             OpCnpj.Checked = false;
@@ -262,6 +298,8 @@ namespace LaçosElô.Cadastro.Cliente {
                 LimparCampos();
             
             }
+            btSalvar.Text = "Salvar";
+            imgCliente.Image = Properties.Resources.avatar_icone;
         }
         private void BtFechar_Click(object sender, EventArgs e) {
             Close();
@@ -396,7 +434,7 @@ namespace LaçosElô.Cadastro.Cliente {
                 imgCliente.Image = Image.FromFile(caixa.FileName);
 
                 File.Copy(caixa.FileName, 
-                    AppDomain.CurrentDomain.BaseDirectory + "Fotos/" + TxtId.Text + ".png");
+                    caminhoFotos + TxtId.Text + ".png");
             }
         }
         private void button2_Click(object sender, EventArgs e) {
@@ -406,7 +444,7 @@ namespace LaçosElô.Cadastro.Cliente {
                 return;
             }
 
-            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "Fotos/" + TxtId.Text + ".png") == false) {
+            if (File.Exists(caminhoFotos + TxtId.Text + ".png") == false) {
                 Funcoes.MsgAlerta("Não há foto para remover.");
                 return;
             }
@@ -415,7 +453,7 @@ namespace LaçosElô.Cadastro.Cliente {
                 return;
 
             imgCliente.Image = Properties.Resources.avatar_icone;
-            File.Delete(AppDomain.CurrentDomain.BaseDirectory + "Fotos/" + TxtId.Text + ".png");
+            File.Delete(caminhoFotos + TxtId.Text + ".png");
         }
     }
     
