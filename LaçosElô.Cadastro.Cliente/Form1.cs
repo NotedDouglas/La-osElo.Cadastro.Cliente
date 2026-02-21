@@ -19,6 +19,10 @@ namespace LaçosElô.Cadastro.Cliente {
 
         private void Form1_Load(object sender, EventArgs e) {
 
+            Funcoes.CarregaComboDistinct(ComboEndereco, "clientes", "endereco");
+            Funcoes.CarregaComboDistinct(comboBairro, "clientes", "bairro");
+            Funcoes.CarregaComboDistinct(comboCidade, "clientes", "cidade");
+
             if (TxtId.Text == "")
                 return;
 
