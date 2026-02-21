@@ -13,7 +13,7 @@ namespace LaçosElô.Cadastro.Cliente {
         static void Main() {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ClientesLacosElo());
+            Application.Run(new MenuClientes());
         }
     }
 }

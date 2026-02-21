@@ -91,7 +91,6 @@ namespace LaçosElô.Cadastro.Cliente {
 
         }
 
-
         private void CarregarCliente(int id) {
             ClienteRepository repo = new ClienteRepository();
             DataTable dt = repo.BuscarClientePorId(id);
