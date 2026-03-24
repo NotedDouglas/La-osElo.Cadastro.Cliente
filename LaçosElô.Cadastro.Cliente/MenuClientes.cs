@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.OleDb;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace LaçosElô.Cadastro.Cliente {
+
     public partial class MenuClientes : Form {
         public MenuClientes() {
             InitializeComponent();
@@ -18,13 +21,12 @@ namespace LaçosElô.Cadastro.Cliente {
             // Abre maximizado
             this.WindowState = FormWindowState.Maximized;
 
-            // Opcional: impedir redimensionamento manual
+            // impedir redimensionamento manual
             this.MaximizeBox = false;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
-            // Se quiser realmente ocupar 100% da tela sem borda:
-            // this.FormBorderStyle = FormBorderStyle.None;
-            // this.WindowState = FormWindowState.Maximized;
+           
+            dgLista.DataSource = Funcoes.BuscaSQL("SELECT * FROM clientes");
         }
 
         private void btAdd_Click(object sender, EventArgs e) {
@@ -33,6 +35,8 @@ namespace LaçosElô.Cadastro.Cliente {
             formAdd.ShowDialog();
         }
 
-
+        private void groupBox1_Enter(object sender, EventArgs e) {
+            
+        }
     }
 }

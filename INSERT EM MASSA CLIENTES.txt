@@ -1,0 +1,41 @@
+string caminhoArquivo = @"C:\Users\ediva\source\repos\Curso.Chsarp.Cadastro.Clientes\dadosClientes.json";
+
+            string conteudoJson = System.IO.File.ReadAllText(caminhoArquivo);
+
+            dynamic objetoJson = Newtonsoft.Json.JsonConvert.DeserializeObject(conteudoJson);
+
+
+            string comandoSql = "INSERT INTO clientes (nome, documento, genero, rg, estado_civil, nasc, cep, endereco, bairro, cidade, estado, celular, email, obs, situacao) " +
+                                            "VALUES (@nome, @documento, @genero, @rg, @estado_civ, @nasc, @cep, @endereco, @bairro, @cidade, @estado, @celular, @email, @obs, @situacao)";
+
+            using (OleDbConnection Conexao = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\ediva\source\repos\Curso.Chsarp.Cadastro.Clientes\base_clientes.accdb"))
+            {
+                Conexao.Open();
+
+                foreach (var item in objetoJson)
+                {
+                    using (OleDbCommand cmd = Conexao.CreateCommand())
+                    {
+                        cmd.CommandText = comandoSql;
+
+                        cmd.Parameters.AddWithValue("@nome", item.nome.ToString());
+                        cmd.Parameters.AddWithValue("@documento", item.documento.ToString());
+                        cmd.Parameters.AddWithValue("@genero", item.genero.ToString());
+                        cmd.Parameters.AddWithValue("@rg", item.rg.ToString());
+                        cmd.Parameters.AddWithValue("@estado_civ", item.estado_civil.ToString());
+                        cmd.Parameters.AddWithValue("@nasc", Convert.ToDateTime(item.nasc.ToString()));
+                        cmd.Parameters.AddWithValue("@cep", item.cep.ToString());
+                        cmd.Parameters.AddWithValue("@endereco", item.endereco.ToString());
+                        cmd.Parameters.AddWithValue("@bairro", item.bairro.ToString());
+                        cmd.Parameters.AddWithValue("@cidade", item.cidade.ToString());
+                        cmd.Parameters.AddWithValue("@estado", item.estado.ToString());
+                        cmd.Parameters.AddWithValue("@celular", item.celular.ToString());
+                        cmd.Parameters.AddWithValue("@email", item.email.ToString());
+                        cmd.Parameters.AddWithValue("@obs", item.obs.ToString());
+                        cmd.Parameters.AddWithValue("@situacao", item.situacao.ToString());
+
+                        cmd.ExecuteNonQuery();
+
+                    }
+                }
+            }

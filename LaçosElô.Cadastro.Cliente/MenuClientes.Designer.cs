@@ -25,12 +25,14 @@
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MenuClientes));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.btAdd = new System.Windows.Forms.Button();
-            this.btEditar = new System.Windows.Forms.Button();
-            this.btPdf = new System.Windows.Forms.Button();
             this.btCadastro = new System.Windows.Forms.Button();
+            this.btPdf = new System.Windows.Forms.Button();
+            this.btEditar = new System.Windows.Forms.Button();
+            this.btAdd = new System.Windows.Forms.Button();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.dgLista = new System.Windows.Forms.DataGridView();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgLista)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -47,48 +49,7 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Ações";
-            // 
-            // btAdd
-            // 
-            this.btAdd.BackColor = System.Drawing.Color.Transparent;
-            this.btAdd.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btAdd.BackgroundImage")));
-            this.btAdd.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btAdd.FlatAppearance.BorderSize = 0;
-            this.btAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btAdd.Location = new System.Drawing.Point(9, 37);
-            this.btAdd.Name = "btAdd";
-            this.btAdd.Size = new System.Drawing.Size(48, 48);
-            this.btAdd.TabIndex = 1;
-            this.btAdd.UseVisualStyleBackColor = false;
-            this.btAdd.Click += new System.EventHandler(this.btAdd_Click);
-            // 
-            // btEditar
-            // 
-            this.btEditar.BackColor = System.Drawing.Color.Transparent;
-            this.btEditar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btEditar.BackgroundImage")));
-            this.btEditar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btEditar.Enabled = false;
-            this.btEditar.FlatAppearance.BorderSize = 0;
-            this.btEditar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btEditar.Location = new System.Drawing.Point(63, 37);
-            this.btEditar.Name = "btEditar";
-            this.btEditar.Size = new System.Drawing.Size(48, 48);
-            this.btEditar.TabIndex = 1;
-            this.btEditar.UseVisualStyleBackColor = false;
-            // 
-            // btPdf
-            // 
-            this.btPdf.BackColor = System.Drawing.Color.Transparent;
-            this.btPdf.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btPdf.BackgroundImage")));
-            this.btPdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btPdf.Enabled = false;
-            this.btPdf.FlatAppearance.BorderSize = 0;
-            this.btPdf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btPdf.Location = new System.Drawing.Point(117, 38);
-            this.btPdf.Name = "btPdf";
-            this.btPdf.Size = new System.Drawing.Size(48, 48);
-            this.btPdf.TabIndex = 1;
-            this.btPdf.UseVisualStyleBackColor = false;
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // btCadastro
             // 
@@ -104,6 +65,58 @@
             this.btCadastro.TabIndex = 1;
             this.btCadastro.UseVisualStyleBackColor = false;
             // 
+            // btPdf
+            // 
+            this.btPdf.BackColor = System.Drawing.Color.Transparent;
+            this.btPdf.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btPdf.BackgroundImage")));
+            this.btPdf.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btPdf.Enabled = false;
+            this.btPdf.FlatAppearance.BorderSize = 0;
+            this.btPdf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btPdf.Location = new System.Drawing.Point(117, 38);
+            this.btPdf.Name = "btPdf";
+            this.btPdf.Size = new System.Drawing.Size(48, 48);
+            this.btPdf.TabIndex = 1;
+            this.btPdf.UseVisualStyleBackColor = false;
+            // 
+            // btEditar
+            // 
+            this.btEditar.BackColor = System.Drawing.Color.Transparent;
+            this.btEditar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btEditar.BackgroundImage")));
+            this.btEditar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btEditar.Enabled = false;
+            this.btEditar.FlatAppearance.BorderSize = 0;
+            this.btEditar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btEditar.Location = new System.Drawing.Point(63, 37);
+            this.btEditar.Name = "btEditar";
+            this.btEditar.Size = new System.Drawing.Size(48, 48);
+            this.btEditar.TabIndex = 1;
+            this.btEditar.UseVisualStyleBackColor = false;
+            // 
+            // btAdd
+            // 
+            this.btAdd.BackColor = System.Drawing.Color.Transparent;
+            this.btAdd.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btAdd.BackgroundImage")));
+            this.btAdd.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btAdd.FlatAppearance.BorderSize = 0;
+            this.btAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btAdd.Location = new System.Drawing.Point(9, 37);
+            this.btAdd.Name = "btAdd";
+            this.btAdd.Size = new System.Drawing.Size(48, 48);
+            this.btAdd.TabIndex = 1;
+            this.btAdd.UseVisualStyleBackColor = false;
+            this.btAdd.Click += new System.EventHandler(this.btAdd_Click);
+            // 
+            // dgLista
+            // 
+            this.dgLista.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgLista.Location = new System.Drawing.Point(12, 133);
+            this.dgLista.Name = "dgLista";
+            this.dgLista.RowHeadersWidth = 51;
+            this.dgLista.RowTemplate.Height = 24;
+            this.dgLista.Size = new System.Drawing.Size(1398, 528);
+            this.dgLista.TabIndex = 1;
+            // 
             // MenuClientes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 22F);
@@ -111,6 +124,7 @@
             this.BackgroundImage = global::LaçosElô.Cadastro.Cliente.Properties.Resources.fundo_Azul;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1262, 673);
+            this.Controls.Add(this.dgLista);
             this.Controls.Add(this.groupBox1);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Consolas", 11F);
@@ -122,6 +136,7 @@
             this.Text = "Menu Clientes Laços Elô";
             this.Load += new System.EventHandler(this.MenuClientes_Load);
             this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgLista)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -134,5 +149,6 @@
         private System.Windows.Forms.Button btCadastro;
         private System.Windows.Forms.Button btPdf;
         private System.Windows.Forms.Button btEditar;
+        private System.Windows.Forms.DataGridView dgLista;
     }
 }
