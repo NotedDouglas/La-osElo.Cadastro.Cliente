@@ -458,6 +458,7 @@ namespace LaçosElô.Cadastro.Cliente {
             imgCliente.Image = Properties.Resources.avatar_icone;
             File.Delete(caminhoFotos + TxtId.Text + ".png");
         }
+
     }
     
 }

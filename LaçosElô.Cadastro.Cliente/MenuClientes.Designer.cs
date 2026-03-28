@@ -39,6 +39,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btCadastro = new System.Windows.Forms.Button();
             this.btPdf = new System.Windows.Forms.Button();
@@ -125,6 +126,7 @@
             this.btEditar.Size = new System.Drawing.Size(48, 48);
             this.btEditar.TabIndex = 1;
             this.btEditar.UseVisualStyleBackColor = false;
+            this.btEditar.Click += new System.EventHandler(this.btEditar_Click);
             // 
             // btAdd
             // 
@@ -146,6 +148,16 @@
             this.dgLista.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.LightCyan;
             this.dgLista.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgLista.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgLista.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Consolas", 11F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgLista.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgLista.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgLista.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.id,
@@ -166,15 +178,20 @@
             this.obs,
             this.situacao,
             this.estado});
+            this.dgLista.EnableHeadersVisualStyles = false;
+            this.dgLista.GridColor = System.Drawing.SystemColors.ActiveCaption;
             this.dgLista.Location = new System.Drawing.Point(12, 133);
             this.dgLista.Name = "dgLista";
             this.dgLista.ReadOnly = true;
             this.dgLista.RowHeadersVisible = false;
             this.dgLista.RowHeadersWidth = 4;
             this.dgLista.RowTemplate.Height = 30;
+            this.dgLista.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgLista.Size = new System.Drawing.Size(1494, 528);
             this.dgLista.TabIndex = 1;
+            this.dgLista.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgLista_CellClick);
             this.dgLista.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgLista_CellContentClick);
+            this.dgLista.Sorted += new System.EventHandler(this.dgLista_Sorted_1);
             // 
             // id
             // 
@@ -197,8 +214,8 @@
             // nome
             // 
             this.nome.DataPropertyName = "nome";
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.nome.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.nome.DefaultCellStyle = dataGridViewCellStyle3;
             this.nome.HeaderText = "Nome do Cliente";
             this.nome.MinimumWidth = 6;
             this.nome.Name = "nome";
@@ -208,9 +225,9 @@
             // nasc
             // 
             this.nasc.DataPropertyName = "nasc";
-            dataGridViewCellStyle3.Format = "d";
-            dataGridViewCellStyle3.NullValue = null;
-            this.nasc.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.Format = "d";
+            dataGridViewCellStyle4.NullValue = null;
+            this.nasc.DefaultCellStyle = dataGridViewCellStyle4;
             this.nasc.HeaderText = "Data de Nascimento";
             this.nasc.MinimumWidth = 6;
             this.nasc.Name = "nasc";
@@ -220,8 +237,8 @@
             // documento
             // 
             this.documento.DataPropertyName = "documento";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.documento.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.documento.DefaultCellStyle = dataGridViewCellStyle5;
             this.documento.HeaderText = "Documento";
             this.documento.MinimumWidth = 6;
             this.documento.Name = "documento";
@@ -231,8 +248,8 @@
             // celular
             // 
             this.celular.DataPropertyName = "celular";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.celular.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.celular.DefaultCellStyle = dataGridViewCellStyle6;
             this.celular.HeaderText = "Celular";
             this.celular.MinimumWidth = 6;
             this.celular.Name = "celular";
@@ -251,8 +268,8 @@
             // email
             // 
             this.email.DataPropertyName = "email";
-            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.email.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.email.DefaultCellStyle = dataGridViewCellStyle7;
             this.email.HeaderText = "E-mail";
             this.email.MinimumWidth = 6;
             this.email.Name = "email";
@@ -262,8 +279,8 @@
             // genero
             // 
             this.genero.DataPropertyName = "genero";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.genero.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.genero.DefaultCellStyle = dataGridViewCellStyle8;
             this.genero.HeaderText = "Genero";
             this.genero.MinimumWidth = 6;
             this.genero.Name = "genero";
@@ -273,8 +290,8 @@
             // rg
             // 
             this.rg.DataPropertyName = "rg";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.rg.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.rg.DefaultCellStyle = dataGridViewCellStyle9;
             this.rg.HeaderText = "N° RG";
             this.rg.MinimumWidth = 6;
             this.rg.Name = "rg";
@@ -284,8 +301,8 @@
             // estado_civil
             // 
             this.estado_civil.DataPropertyName = "estado_civil";
-            dataGridViewCellStyle9.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.estado_civil.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle10.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.estado_civil.DefaultCellStyle = dataGridViewCellStyle10;
             this.estado_civil.HeaderText = "Estado Civil";
             this.estado_civil.MinimumWidth = 6;
             this.estado_civil.Name = "estado_civil";
@@ -295,8 +312,8 @@
             // cep
             // 
             this.cep.DataPropertyName = "cep";
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.cep.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.cep.DefaultCellStyle = dataGridViewCellStyle11;
             this.cep.HeaderText = "Cep";
             this.cep.MinimumWidth = 6;
             this.cep.Name = "cep";
@@ -306,8 +323,8 @@
             // numero
             // 
             this.numero.DataPropertyName = "numero";
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.numero.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.numero.DefaultCellStyle = dataGridViewCellStyle12;
             this.numero.HeaderText = "Número";
             this.numero.MinimumWidth = 6;
             this.numero.Name = "numero";
@@ -317,8 +334,8 @@
             // bairro
             // 
             this.bairro.DataPropertyName = "bairro";
-            dataGridViewCellStyle12.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.bairro.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle13.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.bairro.DefaultCellStyle = dataGridViewCellStyle13;
             this.bairro.HeaderText = "Bairro";
             this.bairro.MinimumWidth = 6;
             this.bairro.Name = "bairro";
@@ -328,8 +345,8 @@
             // cidade
             // 
             this.cidade.DataPropertyName = "cidade";
-            dataGridViewCellStyle13.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.cidade.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle14.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.cidade.DefaultCellStyle = dataGridViewCellStyle14;
             this.cidade.HeaderText = "Cidade";
             this.cidade.MinimumWidth = 6;
             this.cidade.Name = "cidade";
@@ -348,8 +365,8 @@
             // situacao
             // 
             this.situacao.DataPropertyName = "situacao";
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.situacao.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.situacao.DefaultCellStyle = dataGridViewCellStyle15;
             this.situacao.HeaderText = "Situação";
             this.situacao.MinimumWidth = 6;
             this.situacao.Name = "situacao";
@@ -359,8 +376,8 @@
             // estado
             // 
             this.estado.DataPropertyName = "estado";
-            dataGridViewCellStyle15.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.estado.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle16.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.estado.DefaultCellStyle = dataGridViewCellStyle16;
             this.estado.HeaderText = "Estado";
             this.estado.MinimumWidth = 6;
             this.estado.Name = "estado";

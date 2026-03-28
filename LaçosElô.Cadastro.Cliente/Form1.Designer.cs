@@ -757,7 +757,6 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.TextBox TxtId;
         private System.Windows.Forms.TextBox TxtNome;
         private System.Windows.Forms.TextBox TxtEmail;
         private System.Windows.Forms.TextBox TxtNumero;
@@ -788,6 +787,7 @@
         private System.Windows.Forms.Button btFechar;
         private System.Windows.Forms.Button btNovo;
         private System.Windows.Forms.Button btSalvar;
+        public System.Windows.Forms.TextBox TxtId;
     }
 }
 
